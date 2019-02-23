@@ -111,6 +111,7 @@ public class Locations extends AsyncTask<Void, Void, ArrayList<Locations.Locatio
                 if(ele.tag().toString().equals("li")){
                     area = new LocationsCategory();
                     area.setAreaName(ele.select("a").text());
+                    area.setUrlRef(ele.select("a").attr("href"));
                     locationsCategoryArrayList.get(locationsCategoryArrayList.size() - 1).getStateCategories().get(locationsCategoryArrayList.get(locationsCategoryArrayList.size() - 1).getStateCategories().size() - 1).getAreaCategories().add(area);
                 }
             }
@@ -119,9 +120,9 @@ public class Locations extends AsyncTask<Void, Void, ArrayList<Locations.Locatio
 
 //            for (Element ele : doc.getElementsByClass("colmack"))
 
-//            for(LocationsCategory cat : CraigslistData.getCategoriesArrayList()){
+//            for(PostDataCategory cat : CraigslistData.getCategoriesArrayList()){
 //                Log.d(TAG, cat.getStateName() + "," + cat.getUrlRef());
-//                for(LocationsCategory subCat : cat.stateCategories){
+//                for(PostDataCategory subCat : cat.stateCategories){
 //                    Log.d(TAG, subCat.getStateName() + "," + subCat.getUrlRef());
 //                }
 //            }

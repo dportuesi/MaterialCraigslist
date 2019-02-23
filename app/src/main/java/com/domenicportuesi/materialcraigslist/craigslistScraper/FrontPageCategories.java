@@ -73,9 +73,9 @@ public class FrontPageCategories extends AsyncTask<Void, Void, ArrayList<FrontPa
 
 //            for (Element ele : doc.getElementsByClass("colmack"))
 
-//            for(LocationsCategory cat : CraigslistData.getCategoriesArrayList()){
+//            for(PostDataCategory cat : CraigslistData.getCategoriesArrayList()){
 //                Log.d(TAG, cat.getStateName() + "," + cat.getUrlRef());
-//                for(LocationsCategory subCat : cat.stateCategories){
+//                for(PostDataCategory subCat : cat.stateCategories){
 //                    Log.d(TAG, subCat.getStateName() + "," + subCat.getUrlRef());
 //                }
 //            }
