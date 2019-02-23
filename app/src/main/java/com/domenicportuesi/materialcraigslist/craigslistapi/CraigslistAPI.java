@@ -21,6 +21,7 @@ public class CraigslistAPI extends AsyncTask<Void, Void, Void> {
 
         String urlRef;
         String categoryName;
+        ArrayList<Category> subCategories = CraigslistData.getCategoriesArrayList();
 
         public ArrayList<Category> getSubCategories() {
             return subCategories;
@@ -29,8 +30,6 @@ public class CraigslistAPI extends AsyncTask<Void, Void, Void> {
         public void setSubCategories(ArrayList<Category> subCategories) {
             this.subCategories = subCategories;
         }
-
-        ArrayList<Category> subCategories = null;
 
         public String getCategoryName() {
             return categoryName;
@@ -63,9 +62,9 @@ public class CraigslistAPI extends AsyncTask<Void, Void, Void> {
             doc = Jsoup.connect("https://www.craigslist.org/").get();
             for (Element ele : doc.getElementsByClass("col")) {
                 Category category = new Category(ele.selectFirst("a").select("span").text(), ele.selectFirst("a").attr("href"));
-                for(Element subEle : ele.getElementsByClass("li")){
-                    Category subCategory = new Category(subEle.se)
-                    category.subCategories.add()
+                for(Element subEle : ele.getElementsByAttribute("cats")){
+                    Category subCategory = new Category(subEle.select("a").select("span").text(), subEle.select("a").attr("href"));
+                    category.getSubCategories().add(subCategory);
                 }
                 CraigslistData.getCategoriesArrayList().add(category);
 
@@ -74,6 +73,9 @@ public class CraigslistAPI extends AsyncTask<Void, Void, Void> {
 
             for(Category cat : CraigslistData.getCategoriesArrayList()){
                 Log.d(TAG, cat.getCategoryName() + "," + cat.getUrlRef());
+                for(Category subCat : cat.subCategories){
+                    Log.d(TAG, subCat.getCategoryName() + "," + subCat.getUrlRef());
+                }
             }
 
         } catch (Exception ex) {
