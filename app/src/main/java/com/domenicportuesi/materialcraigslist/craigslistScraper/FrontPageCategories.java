@@ -1,26 +1,24 @@
-package com.domenicportuesi.materialcraigslist.craigslistapi;
+package com.domenicportuesi.materialcraigslist.craigslistScraper;
 
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
-public class CraigslistAPI extends AsyncTask<Void, Void, Void> {
+public class FrontPageCategories extends AsyncTask<Void, Void, ArrayList<FrontPageCategories.Category>> {
     private final String TAG = "CraigsListAPIAsyncTask";
     Document doc = null;
+    public static ArrayList<FrontPageCategories.Category> categoriesArrayList = new ArrayList<>();
 
 
-    protected static class Category {
+    public static class Category {
 
-        String urlRef;
-        String categoryName;
+        String urlRef = "";
+        String categoryName = "";
         ArrayList<Category> subCategories = new ArrayList<>();
 
         public ArrayList<Category> getSubCategories() {
@@ -57,7 +55,7 @@ public class CraigslistAPI extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... Void) {
+    protected ArrayList<Category> doInBackground(Void... Void) {
         Category subCategory;
         Category category;
         try {
@@ -68,22 +66,24 @@ public class CraigslistAPI extends AsyncTask<Void, Void, Void> {
                     subCategory = new Category(subEle.select("a").select("span").text(), subEle.select("a").attr("href"));
                     category.getSubCategories().add(subCategory);
                 }
-                CraigslistData.getCategoriesArrayList().add(category);
-
-
+                categoriesArrayList.add(category);
             }
 
-            for(Category cat : CraigslistData.getCategoriesArrayList()){
-                Log.d(TAG, cat.getCategoryName() + "," + cat.getUrlRef());
-                for(Category subCat : cat.subCategories){
-                    Log.d(TAG, subCat.getCategoryName() + "," + subCat.getUrlRef());
-                }
-            }
+//            doc = Jsoup.connect("https://www.craigslist.org/about/sites").get();
+
+//            for (Element ele : doc.getElementsByClass("colmack"))
+
+//            for(LocationsCategory cat : CraigslistData.getCategoriesArrayList()){
+//                Log.d(TAG, cat.getStateName() + "," + cat.getUrlRef());
+//                for(LocationsCategory subCat : cat.stateCategories){
+//                    Log.d(TAG, subCat.getStateName() + "," + subCat.getUrlRef());
+//                }
+//            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;
+        return categoriesArrayList;
     }
 
     protected void onPostExecute(Void result){
